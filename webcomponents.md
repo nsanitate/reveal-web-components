@@ -167,62 +167,41 @@ Ma cosa succede se vogliamo costruire nuovi elementi?
 ###Carousel / Slideshow
 
 ```xml
-<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
+<head>
+  <link href="styles/bootstrap.min.css" rel="stylesheet">
+  <_script_ src="lib/bootstrap/carousel.js"></_script_>
+</head>
+<body>
+  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
 
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="..." alt="...">
-      <div class="carousel-caption">
-        ...
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="..." alt="...">
+      </div>
+      <div class="item">
+        <img src="..." alt="...">
+      </div>
+      <div class="item">
+        <img src="..." alt="...">
       </div>
     </div>
-    <div class="item">
-      <img src="..." alt="...">
-      <div class="carousel-caption">
-        ...
-      </div>
-    </div>
-    <div class="item">
-      <img src="..." alt="...">
-      <div class="carousel-caption">
-        ...
-      </div>
-    </div>
-    <div class="item">
-      <img src="..." alt="...">
-      <div class="carousel-caption">
-        ...
-      </div>
-    </div>
-    <div class="item">
-      <img src="..." alt="...">
-      <div class="carousel-caption">
-        ...
-      </div>
-    </div>
-    <div class="item">
-      <img src="..." alt="...">
-      <div class="carousel-caption">
-        ...
-      </div>
-    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
   </div>
-
-  <!-- Controls -->
-  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
-</div>
+</body>
 ```
 
 ----
@@ -246,11 +225,16 @@ Ma cosa succede se vogliamo costruire nuovi elementi?
 ###Carousel / Slideshow
 
 ```xml
-<carousel>
-  <img src="..." alt="...">
-  <img src="..." alt="...">
-  <img src="..." alt="...">
-</carousel>
+<head>
+  <link href="lib/bootstrap/carousel.html" rel="import">
+</head>
+<body>
+  <carousel>
+    <img src="..." alt="...">
+    <img src="..." alt="...">
+    <img src="..." alt="...">
+  </carousel>
+</body>
 ```
 
 ---
@@ -288,7 +272,7 @@ Il mondo delle Web Components comprende:
 
 ----
 
-![Shock](images/shock.gif)
+<img src="images/shock.gif" style="height: 400px">
 
 ...not a new concept
 
@@ -424,7 +408,7 @@ var MyElement = document.registerElement('my-element', {
 <my-tag></my-tag>
 
 <template id="my-template">
-  <p>Sono in my-tag e provengo da una &lt;template&gt;.</p>
+  <p>Sono in &lt;my-tag&gt; e provengo da una &lt;template&gt;.</p>
 </template>
 ```
 
@@ -472,10 +456,6 @@ root.textContent = 'Ciao, mondo!';
 
 ----
 
-![Shadow DOM 1](images/shadow-dom-1.png)
-
-----
-
 ###E il contenuto dell'host?
 
 ```xml
@@ -490,10 +470,6 @@ root.innerHTML = 'Ciao <content></content>. Sei il benvenuto!';
 
 ----
 
-![Shadow DOM 2](images/shadow-dom-2.png)
-
-----
-
 **Shadow DOM** + **Custom Elements** + **Template**
 
 ```xml
@@ -501,7 +477,7 @@ root.innerHTML = 'Ciao <content></content>. Sei il benvenuto!';
 <my-tag>Nicola</my-tag>
 
 <template id="my-template">
-  <p>Ciao <content></content>. Sono nello Shadow DOM di my-tag e provengo da una &lt;template&gt;.</p>
+  <p>Ciao <content></content>. Sono nello Shadow DOM di &lt;my-tag&gt; e provengo da una &lt;template&gt;.</p>
 </template>
 ```
 
@@ -555,14 +531,14 @@ Attenti agli &lt;script&gt;:
 
 * Vengono eseguiti all'import
 * Non bloccano il parsing della main page
-* Fanno riferimento a **"window"** del documento importatore
+* Fanno riferimento a **"document"** del documento importatore
 
 ----
 
 **All together now**
 ```xml
 <template id="my-template">
-  <p>Ciao <content></content>. Sono nello Shadow DOM di my-tag e provengo da una &lt;template&gt;.</p>
+  <p>Ciao <content></content>. Sono nello Shadow DOM di &lt;my-tag&gt; e provengo da una &lt;template&gt; definito nel file shadow-dom-for-import.html.</p>
 </template>
 ```
 
@@ -601,11 +577,11 @@ document.registerElement('my-tag', { prototype: proto });
 
 ###Le pecche delle tecnologie Web
 
-* Riuso <span class="fragment fade-in" style="color:green">✓</span>
-* Estendibilità <span class="fragment fade-in" style="color:green">✓</span>
-* Incapsulamento <span class="fragment fade-in" style="color:green">✓</span>
-* Modularità <span class="fragment fade-in" style="color:green">✓</span>
-* Manutenibilità <span class="fragment fade-in" style="color:green">✓</span>
+* Riuso <span class="fragment fade-in" style="color:green">✓ Template</span>
+* Estendibilità <span class="fragment fade-in" style="color:green">✓ Custom Elements</span>
+* Incapsulamento <span class="fragment fade-in" style="color:green">✓ Shadow DOM</span>
+* Modularità <span class="fragment fade-in" style="color:green">✓ HTML Imports</span>
+* Manutenibilità <span class="fragment fade-in" style="color:green">✓ Conseguenza degli altri</span>
 
 ----
 
