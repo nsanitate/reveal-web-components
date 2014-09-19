@@ -573,6 +573,8 @@ document.registerElement('my-tag', { prototype: proto });
 
 ##Conclusioni
 
+![What's your point](images/whats-your-point.png)
+
 ----
 
 ###Le pecche delle tecnologie Web
