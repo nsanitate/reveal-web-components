@@ -1,0 +1,19 @@
+<template id="my-template">
+  <p>Hi <content></content>. I'm in Shadow DOM. My markup was stamped from a &lt;template&gt;.</p>
+</template>
+
+<script>
+  var importDoc = document.currentScript.ownerDocument;
+
+  var proto = Object.create(HTMLElement.prototype, {
+    createdCallback: {
+      value: function() {
+        var t = importDoc.querySelector('#my-template');
+        var clone = document.importNode(t.content, true);
+        this.createShadowRoot().appendChild(clone);
+      }
+    }
+  });
+
+  document.registerElement('my-tag', { prototype: proto });
+</script>

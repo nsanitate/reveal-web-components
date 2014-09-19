@@ -1,0 +1,32 @@
+<html>
+<head>
+  <style>
+  p {
+    color: orange;
+  }
+  </style>
+</head>
+<body>
+
+  <p>I'm out of Shadow DOM</p>
+  <my-tag>Nicola</my-tag>
+
+  <template id="my-template">
+    <p>Hi <content></content>. I'm in Shadow DOM. My markup was stamped from a &lt;template&gt;.</p>
+  </template>
+
+  <script>
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          var t = document.querySelector('#my-template');
+          var clone = document.importNode(t.content, true);
+          this.createShadowRoot().appendChild(clone);
+        }
+      }
+    });
+
+    document.registerElement('my-tag', { prototype: proto });
+  </script>
+</body>
+</html>

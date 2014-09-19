@@ -1,0 +1,26 @@
+<html>
+<head>
+</head>
+<body>
+
+  <my-tag></my-tag>
+
+  <template id="my-template">
+    <p>My markup was stamped from a &lt;template&gt;.</p>
+  </template>
+
+  <script>
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          var t = document.querySelector('#my-template');
+          var clone = document.importNode(t.content, true);
+          this.appendChild(clone);
+        }
+      }
+    });
+
+    document.registerElement('my-tag', { prototype: proto });
+  </script>
+</body>
+</html>

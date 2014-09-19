@@ -1,0 +1,14 @@
+<html>
+<head>
+</head>
+<body>
+
+  <button>Nicola</button>
+
+  <script>
+    var host = document.querySelector('button');
+    var root = host.createShadowRoot();
+    root.innerHTML = 'My name is <content></content>. Welcome!';
+  </script>
+</body>
+</html>
