@@ -2,23 +2,21 @@
 <head>
 </head>
 <body>
-  <button onclick="useIt()">Use me</button>
+  <button onclick="useIt()">Cliccami</button>
   <div id="container"></div>
-  <script>
-    function useIt() {
-      var content = document.querySelector('template').content;
-      // Update something in the template DOM.
-      var span = content.querySelector('span');
-      span.textContent = parseInt(span.textContent) + 1;
-      document.querySelector('#container').appendChild(
-          document.importNode(content, true));
-    }
-  </script>
 
   <template>
-    <div>Template used: <span>0</span></div>
-    <script>alert('Thanks!')</script>
+    <div>Provengo da una &lt;template&gt;.</div>
+    <script>alert('Grazie!')</script>
   </template>
+
+  <script>
+    function useIt() {
+      var t = document.querySelector('template');
+      var clone = document.importNode(t.content, true);
+
+      document.querySelector('#container').appendChild(clone);
+    }
+  </script>
 </body>
 </html>
-

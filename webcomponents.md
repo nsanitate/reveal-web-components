@@ -1,3 +1,5 @@
+<link href="styles/font-awesome/css/font-awesome.css" rel="stylesheet">
+
 ##Web Components
 ###Il modello a componenti per il Web
 ![Club degli Sviluppatori](images/cds.png) ![Web Component](images/wc.png) ![Nicola Sanitate](images/profile.png)
@@ -8,7 +10,7 @@ In principio il Web era semplice
 
 ----
 
-![Tech Before](images/tech-before.png)
+<img src="images/tech-before.png">
 
 ----
 
@@ -68,6 +70,14 @@ Il Web è composto da **ELEMENTI**
 
 Elementi **INCAPSULATI**
 
+<select style="font-size:32px; width: 300px">
+  <option>Small</option>
+  <option>Medium</option>
+  <option>Large</option>
+  <option>X-Large</option>
+  <option>XX-Large</option>
+</select>
+
 ```xml
 <select>
   <option>Small</option>
@@ -78,17 +88,17 @@ Elementi **INCAPSULATI**
 </select>
 ```
 
-<select style="width: 200px">
-  <option>Small</option>
-  <option>Medium</option>
-  <option>Large</option>
-  <option>X-Large</option>
-  <option>XX-Large</option>
-</select>
-
 ----
 
 Elementi **CONFIGURABILI**
+
+<select id="size" size="6" multiple style="font-size:32px; width: 300px">
+  <option disabled>Small</option>
+  <option disabled>Medium</option>
+  <option selected>Large</option>
+  <option>X-Large</option>
+  <option>XX-Large</option>
+</select>
 
 ```xml
 <select id="size" size="6" multiple>
@@ -100,17 +110,23 @@ Elementi **CONFIGURABILI**
 </select>
 ```
 
-<select id="size" size="6" multiple style="width: 200px">
-  <option disabled>Small</option>
-  <option disabled>Medium</option>
-  <option selected>Large</option>
-  <option>X-Large</option>
-  <option>XX-Large</option>
-</select>
-
 ----
 
 Elementi **COMPONIBILI**
+
+<select style="font-size:32px; width: 300px">
+  <optgroup label="Small">
+    <option>Small</option>
+  </optgroup>
+  <optgroup label="Medium">
+    <option>Medium</option>
+  </optgroup>
+  <optgroup label="Large">
+    <option>Large</option>
+    <option>X-Large</option>
+    <option>XX-Large</option>
+  </optgroup>
+</select>
 
 ```xml
 <select>
@@ -127,20 +143,6 @@ Elementi **COMPONIBILI**
   </optgroup>
 </select>
 ```
-
-<select style="width: 200px">
-  <optgroup label="Small">
-    <option>Small</option>
-  </optgroup>
-  <optgroup label="Medium">
-    <option>Medium</option>
-  </optgroup>
-  <optgroup label="Large">
-    <option>Large</option>
-    <option>X-Large</option>
-    <option>XX-Large</option>
-  </optgroup>
-</select>
 
 ----
 
@@ -286,20 +288,22 @@ Il mondo delle Web Components comprende:
 
 ----
 
-![Template](images/template.png)
+![Shock](images/shock.gif)
+
+...not a new concept
 
 ----
 
-###&lt;template&gt;
-
-Nuovo tag per il client-side templating DOM-based
+Come definire un client-side templating DOM-based?
+![Homer thoughtful](images/homer-thoughtful.png)
+<h3 class="fragment">&lt;template&gt;</h3>
 
 ----
 
-###Come si usa
+###Come si definisce
 
 ```xml
-<template id="mytemplate">
+<template id="my-template">
   <img src="" alt="great image">
   <div class="comment"></div>
 </template>
@@ -307,7 +311,7 @@ Nuovo tag per il client-side templating DOM-based
 
 ----
 
-Il contenuto di una template
+###Proprietà del template content
 
 * non viene renderizzato
 * non ha side effects
@@ -315,14 +319,14 @@ Il contenuto di una template
 
 ----
 
-###Come si attiva
+###Come si usa
 
 ```javascript
-var t = document.querySelector('#mytemplate');
-// Populate the src at runtime.
-t.content.querySelector('img').src = 'logo.png';
-
+var t = document.querySelector('#my-template');
 var clone = document.importNode(t.content, true);
+
+// Populate the src at runtime.
+clone.querySelector('img').src = 'logo.png';
 document.body.appendChild(clone);
 ```
 
@@ -331,27 +335,23 @@ document.body.appendChild(clone);
 ###Esempio
 
 ```xml
-<button onclick="useIt()">Use me</button>
+<button onclick="useIt()">Cliccami</button>
 <div id="container"></div>
 
-<template>
-  <div>Template used: <span>0</span></div>
-  <_script_>alert('Thanks!')</_script_>
+<template id="my-template">
+  <div>Provengo da una &lt;template&gt;.</div>
+  <_script_>alert('Grazie!')</_script_>
 </template>
 ```
 
 ```javascript
 function useIt() {
-  var content = document.querySelector('template').content;
-  // Update something in the template DOM.
-  var span = content.querySelector('span');
-  span.textContent = parseInt(span.textContent) + 1;
-  document.querySelector('#container').appendChild(
-      document.importNode(content, true));
+  var t = document.querySelector('#my-template');
+  var clone = document.importNode(t.content, true);
+
+  document.querySelector('#container').appendChild(clone);
 }
 ```
-
-<a href="template.html" taget="blank">template.html</a>
 
 ---
 
@@ -365,7 +365,7 @@ Permettono di definire nuovi tipi di elementi HTML
 
 ----
 
-###Come definire un Custom Element
+###Come si definisce
 
 ```javascript
 var XFoo = document.registerElement('x-foo');
@@ -387,7 +387,7 @@ Unica regola dei Custom Elements
 
 ----
 
-###Come utilizzare un Custom Element
+###Come si usa
 
 ```xml
 <x-foo></x-foo>
@@ -424,7 +424,7 @@ var MyElement = document.registerElement('my-element', {
 <my-tag></my-tag>
 
 <template id="my-template">
-  <p>My markup was stamped from a &lt;template&gt;.</p>
+  <p>Sono in my-tag e provengo da una &lt;template&gt;.</p>
 </template>
 ```
 
@@ -441,8 +441,6 @@ var proto = Object.create(HTMLElement.prototype, {
 
 document.registerElement('my-tag', { prototype: proto });
 ```
-
-<a href="custom-elements.html" taget="blank">custom-elements.html</a>
 
 ---
 
@@ -478,7 +476,7 @@ root.textContent = 'Ciao, mondo!';
 
 ----
 
-###Usare il conenuto dell'host
+###E il contenuto dell'host?
 
 ```xml
 <button>Nicola</button>
@@ -487,7 +485,7 @@ root.textContent = 'Ciao, mondo!';
 ```javascript
 var host = document.querySelector('button');
 var root = host.createShadowRoot();
-root.innerHTML = 'My name is <content></content>. Welcome!';
+root.innerHTML = 'Ciao <content></content>. Sei il benvenuto!';
 ```
 
 ----
@@ -499,11 +497,11 @@ root.innerHTML = 'My name is <content></content>. Welcome!';
 **Shadow DOM** + **Custom Elements** + **Template**
 
 ```xml
-<p>I'm out of Shadow DOM</p>
+<p>Non sono nello Shadow DOM</p>
 <my-tag>Nicola</my-tag>
 
 <template id="my-template">
-  <p>Hi <content></content>. I'm in Shadow DOM. My markup was stamped from a &lt;template&gt;.</p>
+  <p>Ciao <content></content>. Sono nello Shadow DOM di my-tag e provengo da una &lt;template&gt;.</p>
 </template>
 ```
 
@@ -524,8 +522,6 @@ document.registerElement('my-tag', { prototype: proto });
 ```css
 p { color: orange; }
 ```
-
-<a href="shadow-dom.html" taget="blank">shadow-dom.html</a>
 
 ---
 
@@ -564,6 +560,11 @@ Attenti agli &lt;script&gt;:
 ----
 
 **All together now**
+```xml
+<template id="my-template">
+  <p>Ciao <content></content>. Sono nello Shadow DOM di my-tag e provengo da una &lt;template&gt;.</p>
+</template>
+```
 
 ```javascript
 var importDoc = document.currentScript.ownerDocument;
@@ -580,7 +581,8 @@ var proto = Object.create(HTMLElement.prototype, {
 
 document.registerElement('my-tag', { prototype: proto });
 ```
-<small>shadow-dom-for-import.html</small>
+
+-----------------------
 
 ```xml
 <head>
@@ -590,9 +592,6 @@ document.registerElement('my-tag', { prototype: proto });
   <my-tag>Nicola</my-tag>
 </body>
 ```
-<small>shadow-dom-for-import.html</small>
-
-<a href="imports.html" taget="blank">imports.html</a>
 
 ---
 
@@ -602,14 +601,11 @@ document.registerElement('my-tag', { prototype: proto });
 
 ###Le pecche delle tecnologie Web
 
-<ul>
-  <li class="fragment fade-in"><strike>Riuso</strike> **(Template)**</li>
-  <li class="fragment fade-in"><strike>Estendibilità</strike> **(Custom Elements)**</li>
-  <li class="fragment fade-in"><strike>Incapsulamento</strike> **(Shadow DOM)**</li>
-  <li class="fragment fade-in"><strike>Modularità</strike> **(HTML Imports)**</li>
-  <li class="fragment fade-in"><strike>Manutenibilità</strike> **(Conseguenza degli altri)**</li>
-</ul>
-
+* Riuso <span class="fragment fade-in" style="color:green">✓</span>
+* Estendibilità <span class="fragment fade-in" style="color:green">✓</span>
+* Incapsulamento <span class="fragment fade-in" style="color:green">✓</span>
+* Modularità <span class="fragment fade-in" style="color:green">✓</span>
+* Manutenibilità <span class="fragment fade-in" style="color:green">✓</span>
 
 ----
 
@@ -648,21 +644,27 @@ Il futuro del Web passa da loro
 
 --------------------
 
-|            |                                                                           |
-|------------|---------------------------------------------------------------------------|
-| _linkedin_ | [it.linkedin.com/in/nsanitate](http://it.linkedin.com/in/nsanitate)       |
-| _twitter_  | [@n_sanitate](https://twitter.com/n_sanitate)                             |
-| _gplus_    | [plus.google.com/+NicolaSanitate](http://plus.google.com/+NicolaSanitate) |
-| _github_   | [github.com/nsanitate](https://github.com/nsanitate)                      |
+|                                              |                                                                         |
+|----------------------------------------------|-------------------------------------------------------------------------|
+|<i class="fa fa-linkedin-square fa-lg"></i>   |[it.linkedin.com/in/nsanitate](http://it.linkedin.com/in/nsanitate)      |
+|<i class="fa fa-twitter-square fa-lg"></i>    |[@n_sanitate](https://twitter.com/n_sanitate)                            |
+|<i class="fa fa-google-plus-square fa-lg"></i>|[plus.google.com/+NicolaSanitate](http://plus.google.com/+NicolaSanitate)|
+|<i class="fa fa-github-square fa-lg"></i>     |[github.com/nsanitate](https://github.com/nsanitate)                     |
 
 ----
 
 ##Riferimenti
 
-* [hyperakt.com](http://hyperakt.com/items/google-evolution)
-* [w3.org](http://www.w3c.org)
-* [html5rocks.com](http://www.html5rocks.com)
-* [css-trick.com](http://www.css-trick.com)
-* [webcomponents.org](http://webcomponents.org)
-* [polymer-project.org](https://www.polymer-project.org)
-* [x-tags.org](http://x-tags.org)
+[hyperakt.com](http://hyperakt.com/items/google-evolution)
+
+[w3.org](http://www.w3c.org)
+
+[html5rocks.com](http://www.html5rocks.com)
+
+[css-trick.com](http://www.css-trick.com)
+
+[webcomponents.org](http://webcomponents.org)
+
+[polymer-project.org](https://www.polymer-project.org)
+
+[x-tags.org](http://x-tags.org)
